@@ -1,0 +1,13 @@
+.login_text{
+    color: #ffffff;
+    background-color: #ac3b61;
+}
+
+
+.login_links{
+    color: #0049a8;
+}
+
+.login_links:hover{
+    color: #3b577d;
+}

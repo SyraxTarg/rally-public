@@ -1,0 +1,22 @@
+************* Module rally_back.repositories.event_repo
+repositories\event_repo.py:103:20: E1102: func.count is not callable (not-callable)
+************* Module rally_back.routes.profile_routes
+routes\profile_routes.py:9:0: W0611: Unused ProfileRestrictedListSchemaResponse imported from schemas.response_schemas.profile_schema_response (unused-import)
+************* Module rally_back.services.authent_service
+services\authent_service.py:197:8: W0707: Consider explicitly re-raising using 'except Exception as exc' and 'raise InvalidTokenError(status_code=status.HTTP_401_UNAUTHORIZED, detail='Invalid token') from exc' (raise-missing-from)
+services\authent_service.py:231:8: W0707: Consider explicitly re-raising using 'except Exception as exc' and 'raise InvalidTokenError(status_code=status.HTTP_401_UNAUTHORIZED, detail='Invalid Token') from exc' (raise-missing-from)
+services\authent_service.py:265:8: W0707: Consider explicitly re-raising using 'except Exception as exc' and 'raise InvalidTokenError(status_code=status.HTTP_401_UNAUTHORIZED, detail='Invalid Token') from exc' (raise-missing-from)
+services\authent_service.py:299:8: W0707: Consider explicitly re-raising using 'except Exception as exc' and 'raise InvalidTokenError(status_code=status.HTTP_401_UNAUTHORIZED, detail='Invalid Token') from exc' (raise-missing-from)
+services\authent_service.py:332:8: W0707: Consider explicitly re-raising using 'except Exception as exc' and 'raise InvalidTokenError(status_code=status.HTTP_401_UNAUTHORIZED, detail='Invalid Token') from exc' (raise-missing-from)
+services\authent_service.py:372:8: W0707: Consider explicitly re-raising using 'except Exception as exc' and 'raise InvalidTokenError(status_code=status.HTTP_401_UNAUTHORIZED, detail='Invalid Refresh Token') from exc' (raise-missing-from)
+services\authent_service.py:470:8: W0707: Consider explicitly re-raising using 'except Exception as exc' and 'raise InvalidTokenError(status_code=status.HTTP_401_UNAUTHORIZED, detail='Invalid or expired token') from exc' (raise-missing-from)
+************* Module rally_back.services.bad_words_service
+services\bad_words_service.py:10:4: W0603: Using the global statement (global-statement)
+************* Module rally_back.services.payment_service
+services\payment_service.py:31:0: W0102: Dangerous default value {} as argument (dangerous-default-value)
+************* Module rally_back.services.type_service
+services\type_service.py:11:29: W0622: Redefining built-in 'type' (redefined-builtin)
+
+------------------------------------------------------------------
+Your code has been rated at 9.96/10 (previous run: 9.58/10, +0.38)
+

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Facture Rally</title>
+</head>
+<body style="font-family: Arial, sans-serif; padding: 30px; background-color: #f9f9f9; color: #333;">
+    <div style="max-width: 700px; margin: auto; padding: 30px; background: #fff; border-radius: 8px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
+        <h1 style="color: #d100c7;">Facture</h1>
+        <p><strong>Date :</strong> {{ payment.created_at.strftime('%d/%m/%Y') }}</p>
+        <p><strong>Facturé à :</strong> {{ payment.buyer_email }}</p>
+
+        <table style="margin-top: 20px; width: 100%;">
+            <tr>
+                <td style="padding: 8px;"><strong>Événement :</strong></td>
+                <td style="padding: 8px;">{{ payment.event_title }}</td>
+            </tr>
+            <tr>
+                <td style="padding: 8px;"><strong>Organisateur :</strong></td>
+                <td style="padding: 8px;">{{ payment.organizer_email }}</td>
+            </tr>
+            <tr>
+                <td style="padding: 8px;"><strong>ID de transaction Stripe :</strong></td>
+                <td style="padding: 8px;">{{ payment.stripe_payment_intent_id or 'N/A' }}</td>
+            </tr>
+            <tr>
+                <td style="padding: 8px;"><strong>Status :</strong></td>
+                <td style="padding: 8px;">{{ payment.status }}</td>
+            </tr>
+        </table>
+
+        <table style="margin-top: 30px; width: 100%; border-top: 1px solid #ddd;">
+            <tr>
+                <td style="padding: 8px;"><strong>Montant allant à l'oganisateur :</strong></td>
+                <td style="padding: 8px; text-align: right;">{{ "%.2f"|format(payment.amount) }} €</td>
+            </tr>
+            <tr>
+                <td style="padding: 8px;"><strong>Frais :</strong></td>
+                <td style="padding: 8px; text-align: right;">- {{ "%.2f"|format(payment.fee) }} €</td>
+            </tr>
+            <tr>
+                <td style="padding: 8px;"><strong>Montant total :</strong></td>
+                <td style="padding: 8px; text-align: right;"><strong>{{ "%.2f"|format(payment.brut_amount) }} €</strong></td>
+            </tr>
+        </table>
+
+        <p style="margin-top: 40px; font-size: 14px; color: #999;">
+            Merci pour votre participation à l'événement. <br> – L’équipe Rally
+        </p>
+    </div>
+</body>
+</html>

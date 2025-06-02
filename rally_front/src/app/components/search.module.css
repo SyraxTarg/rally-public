@@ -1,0 +1,7 @@
+.search_button{
+    background-color: #123c69;
+}
+
+.search_button:hover{
+    background-color: #2867aa;
+}

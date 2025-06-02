@@ -1,0 +1,5 @@
+.number_input:focus{
+  outline: 2px solid #ac3b61;
+  outline-offset: 0px;
+  box-shadow: 0 0 0 3px #edc7b7;
+}

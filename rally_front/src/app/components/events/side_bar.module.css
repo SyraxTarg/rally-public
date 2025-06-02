@@ -1,0 +1,103 @@
+/* .sidebar {
+  background-color: white;
+  color: black;
+  width: 0;
+  overflow-x: hidden;
+  transition: width 0.3s ease;
+  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+} */
+
+
+.sidebarOpen {
+  width: 16rem;
+}
+
+.sidebarClosed {
+  width: 0;
+}
+
+.content {
+  transition: margin-left 0.3s ease;
+}
+
+.toggleButton {
+  background-color: #123c69;
+  color: white;
+  font-weight: bold;
+  padding: 0.5rem 1rem;
+  border-radius: 0.25rem;
+  margin-bottom: 1rem;
+}
+
+.nav {
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1rem;
+}
+
+.selected_type{
+    background-color: #123c69;
+    color: white;
+}
+
+.unselected_type{
+    background-color: rgb(226, 226, 226);
+    color: #123c69;
+}
+
+.selected_cutton{
+    background-color: #123c69;
+    color: white;
+}
+
+.unselected_button{
+    background-color: rgb(226, 226, 226);
+    color: #123c69;
+}
+
+/* Par défaut (desktop) */
+.sidebar {
+  background-color: white;
+  color: black;
+  width: 16rem; /* taille fixe pour desktop */
+  overflow-x: hidden;
+  transition: width 0.3s ease;
+  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+  position: relative; /* position classique */
+}
+
+/* Fermée */
+.sidebarClosed {
+  width: 0;
+}
+
+/* Ouverte */
+.sidebarOpen {
+  width: 16rem;
+}
+
+@media (max-width: 640px) {
+  .sidebar {
+    position: fixed;
+    top: 4rem; /* laisse la place au header */
+    bottom: 0;
+    left: 0;
+    height: auto;
+    max-height: 100vh; /* hauteur max = écran - header */
+    overflow-y: auto;
+    z-index: 1000;
+    background-color: white;
+    box-shadow: rgba(0, 0, 0, 0.5) 0px 0px 10px;
+    transition: width 0.3s ease;
+  }
+
+  .sidebarOpen {
+    width: 16rem;
+  }
+
+  .sidebarClosed {
+    width: 0;
+  }
+}

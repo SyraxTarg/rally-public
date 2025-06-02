@@ -1,0 +1,22 @@
+FROM node:24-slim
+
+WORKDIR /app
+
+# Copie les fichiers de dépendances
+COPY package*.json ./
+
+# Installation des dépendances
+RUN npm install
+
+# Copie le reste du code
+COPY . .
+
+# Build de l'app en mode production
+# RUN npm run build
+
+# Exposition du port
+EXPOSE 3000
+
+# Lancement du serveur Next.js en production
+# CMD ["npm", "start"]
+CMD npm run dev

@@ -1,0 +1,11 @@
+.auth_button{
+    /* background-color: #ffd45f;
+    color: #1F2937; */
+    background-color: #123c69;
+    color: #edc7b7;
+}
+
+.auth_button:hover{
+    background-color: #1a5594;
+    color: #edc7b7;
+}

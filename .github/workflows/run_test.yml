@@ -1,0 +1,62 @@
+name: Pipeline for rally
+
+on: [push, pull_request]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:15
+        env:
+          POSTGRES_USER: root
+          POSTGRES_PASSWORD: root
+          POSTGRES_DB: rally
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    strategy:
+      matrix:
+        python-version: ["3.9", "3.10"]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install dependencies
+        working-directory: ./rally_back
+        run: pip install -r requirements.txt
+
+      - name: Wait for Postgres to be ready
+        run: |
+          for i in {1..10}; do
+            nc -z localhost 5432 && echo "Postgres is up!" && break
+            echo "Waiting for Postgres..." && sleep 2
+          done
+
+      - name: Run tests
+        working-directory: ./rally_back
+        env:
+          DATABASE_URL: postgresql://root:root@localhost:5432/rally
+          PYTHONPATH: ${{ github.workspace }}/rally_back
+          BANNED_TERMS_PATH: ${{ github.workspace }}/rally_back/errors/banned_words.txt
+          SECRET_KEY: popo
+          ALGORITHM: HS256
+          ACCESS_TOKEN_EXPIRE_MINUTES: 60
+          REFRESH_TOKEN_EXPIRE_DAYS: 7
+        run: pytest
+
+      - name: Analysing the code with pylint
+        working-directory: ./rally_back
+        run: pylint .
+

@@ -1,0 +1,19 @@
+# Exemple de base
+FROM python:3.11-slim
+
+# Set working directory
+WORKDIR /app
+
+# Copier les fichiers de ton app
+COPY . .
+
+# Installer les dépendances
+RUN pip install --upgrade pip && \
+    pip install -r requirements.txt
+
+# (⬇️) Ajoute psycopg2 ici si pas déjà dans requirements.txt :
+RUN pip install psycopg2-binary
+
+# Lancer l'application
+# CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000", "--reload", "--ssl-keyfile", "/app/certs/127.0.0.1-key.pem", "--ssl-certfile", "/app/certs/127.0.0.1.pem"]
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]

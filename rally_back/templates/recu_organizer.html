@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Reçu de Paiement - Rally</title>
+</head>
+<body style="font-family: Arial, sans-serif; padding: 30px; background-color: #f9f9f9; color: #333;">
+  <div style="max-width: 700px; margin: auto; padding: 30px; background: #fff; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1);">
+    <h1 style="color: #00aa4f;">Reçu de Paiement</h1>
+    <p><strong>Date :</strong> {{ payment.created_at.strftime('%d/%m/%Y') }}</p>
+    <p><strong>Payé à :</strong> {{ payment.organizer_email }}</p>
+
+    <table style="margin-top: 20px; width: 100%;">
+      <tr>
+        <td style="padding: 8px;"><strong>Événement :</strong></td>
+        <td style="padding: 8px;">{{ payment.event_title }}</td>
+      </tr>
+      <tr>
+        <td style="padding: 8px;"><strong>Email acheteur :</strong></td>
+        <td style="padding: 8px;">{{ payment.buyer_email }}</td>
+      </tr>
+      <tr>
+        <td style="padding: 8px;"><strong>ID Stripe :</strong></td>
+        <td style="padding: 8px;">{{ payment.stripe_payment_intent_id or 'N/A' }}</td>
+      </tr>
+    </table>
+
+    <table style="margin-top: 30px; width: 100%; border-top: 1px solid #ddd;">
+      <tr>
+        <td style="padding: 8px;"><strong>Montant brut :</strong></td>
+        <td style="padding: 8px; text-align: right;">{{ "%.2f"|format(payment.brut_amount) }} €</td>
+      </tr>
+      <tr>
+        <td style="padding: 8px;"><strong>Frais :</strong></td>
+        <td style="padding: 8px; text-align: right;">- {{ "%.2f"|format(payment.fee) }} €</td>
+      </tr>
+      <tr>
+        <td style="padding: 8px;"><strong>Montant reçu :</strong></td>
+        <td style="padding: 8px; text-align: right;"><strong>{{ "%.2f"|format(payment.amount) }} €</strong></td>
+      </tr>
+    </table>
+
+    <p style="margin-top: 40px; font-size: 14px; color: #999;">
+      Ce paiement vous a été transféré par Rally via Stripe. <br> – L’équipe Rally
+    </p>
+  </div>
+</body>
+</html>
