@@ -125,3 +125,106 @@ npm run dev
 * **Déploiement** : Docker (pas terminé)
 
 ---
+
+## 🛠️ Création manuelle du Super Admin
+
+Actuellement, la création automatique du **super administrateur** n’est pas encore disponible. Voici donc les étapes manuelles à suivre pour l’installer correctement :
+
+---
+
+### 1. 📝 Créer un Super Admin
+
+**URL :**
+
+```http
+POST http://127.0.0.1:8000/api/v1/authent/register/super-admin
+```
+
+**Body (JSON) :**
+
+```json
+{
+  "email": "votre_email@example.com",
+  "password": "Password.123",
+  "first_name": "Prénom",
+  "last_name": "Nom",
+  "phone_number": "02145674",
+  "photo": "/pfps/default.jpg"
+}
+```
+
+---
+
+### 2. ✉️ Recevoir le Token de Validation par Email
+
+**URL :**
+
+```http
+GET http://127.0.0.1:8000/api/v1/authent/send-token?user_email=votre_email@example.com
+```
+
+> Cette requête enverra un email avec un **token à 6 chiffres**.
+
+---
+
+### 3. ✅ Vérifier le Compte
+
+**URL :**
+
+```http
+GET http://127.0.0.1:8000/api/v1/authent/verify-token?user_email=votre_email@example.com&token=XXXXXX
+```
+
+Remplacez `XXXXXX` par le **token reçu par mail**.
+
+---
+
+### 4. 🔐 Connexion (Login)
+
+**URL :**
+
+```http
+POST http://localhost:8000/api/v1/authent/login
+```
+
+**Body :**
+
+```json
+{
+  "email": "votre_email@example.com",
+  "password": "Password.123"
+}
+```
+
+> La réponse contiendra un **access token** (JWT). Conservez-le précieusement !
+
+---
+
+### 5. 🏷️ Créer un Type d'Événement
+
+**URL :**
+
+```http
+POST http://localhost:8000/api/v1/super-admin/types
+```
+
+**Header :**
+
+```http
+Authorization: Bearer VOTRE_ACCESS_TOKEN
+Content-Type: application/json
+```
+
+**Body :**
+
+```json
+{
+  "type": "anniversaire"
+}
+```
+
+---
+
+### ✅ Vous êtes prêt
+
+Vous avez maintenant un **super admin** et au moins **un type d’événement**, ce qui permet de créer un **compte utilisateur standard** via le **front-end**.
