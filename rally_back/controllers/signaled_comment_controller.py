@@ -101,6 +101,17 @@ def get_signaled_comments_filters(
         offset,
         limit
     )
+    
+    total = signaled_comment_service.get_signaled_comments_by_filters_total_count(
+        db,
+        date,
+        reason_id,
+        user_id,
+        comment_id,
+        status,
+        email_user,
+        email_comment_user
+    )
 
     all_signaled_comments = []
 
@@ -154,6 +165,7 @@ def get_signaled_comments_filters(
 
     return SignaledCommentListSchemaResponse(
         count=len(all_signaled_comments),
+        total=total,
         data=all_signaled_comments
     )
 

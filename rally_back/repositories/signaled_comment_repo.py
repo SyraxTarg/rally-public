@@ -96,3 +96,101 @@ def get_signaled_comments_filters(
         )
 
     return query.order_by(SignaledComment.created_at.desc()).offset(offset).limit(limit).all()
+
+
+def get_all_signaled_comments_filters(
+    db: Session,
+    date: Optional[datetime] = None,
+    reason_id: Optional[int] = None,
+    user_id: Optional[int] = None,
+    comment_id: Optional[int] = None,
+    status: Optional[str] = None,
+    email_user: Optional[str] = None,
+    email_comment_user: Optional[str] = None,
+) -> list[SignaledComment]:
+    """Retrieve signaled comments using optional filters: date, reason, user, comment, status, or emails."""
+    query = db.query(SignaledComment)
+
+    if date is not None:
+        query = query.filter(SignaledComment.created_at <= date)
+
+    if reason_id is not None:
+        query = query.filter(SignaledComment.reason_id == reason_id)
+
+    if user_id is not None:
+        query = query.filter(SignaledComment.user_id == user_id)
+
+    if comment_id is not None:
+        query = query.filter(SignaledComment.comment_id == comment_id)
+
+    if status is not None:
+        query = query.filter(SignaledComment.status == status)
+
+    # 🔁 ALIAS pour éviter conflit
+    user_alias = aliased(User)
+    profile_alias = aliased(Profile)
+    comment_owner_alias = aliased(User)
+    comment_alias = aliased(Comment)
+
+    if email_user is not None:
+        query = query.join(user_alias, SignaledComment.user).filter(user_alias.email == email_user)
+
+    if email_comment_user is not None:
+        query = (
+            query
+            .join(comment_alias, SignaledComment.comment_signaled)
+            .join(profile_alias, comment_alias.profile)
+            .join(comment_owner_alias, profile_alias.user)
+            .filter(comment_owner_alias.email == email_comment_user)
+        )
+
+    return query.order_by(SignaledComment.created_at.desc()).all()
+
+
+def get_signaled_comments_filters_total_count(
+    db: Session,
+    date: Optional[datetime] = None,
+    reason_id: Optional[int] = None,
+    user_id: Optional[int] = None,
+    comment_id: Optional[int] = None,
+    status: Optional[str] = None,
+    email_user: Optional[str] = None,
+    email_comment_user: Optional[str] = None,
+) -> int:
+    """Retrieve signaled comments using optional filters: date, reason, user, comment, status, or emails."""
+    query = db.query(SignaledComment)
+
+    if date is not None:
+        query = query.filter(SignaledComment.created_at <= date)
+
+    if reason_id is not None:
+        query = query.filter(SignaledComment.reason_id == reason_id)
+
+    if user_id is not None:
+        query = query.filter(SignaledComment.user_id == user_id)
+
+    if comment_id is not None:
+        query = query.filter(SignaledComment.comment_id == comment_id)
+
+    if status is not None:
+        query = query.filter(SignaledComment.status == status)
+
+    # 🔁 ALIAS pour éviter conflit
+    user_alias = aliased(User)
+    profile_alias = aliased(Profile)
+    comment_owner_alias = aliased(User)
+    comment_alias = aliased(Comment)
+
+    if email_user is not None:
+        query = query.join(user_alias, SignaledComment.user).filter(user_alias.email == email_user)
+
+    if email_comment_user is not None:
+        query = (
+            query
+            .join(comment_alias, SignaledComment.comment_signaled)
+            .join(profile_alias, comment_alias.profile)
+            .join(comment_owner_alias, profile_alias.user)
+            .filter(comment_owner_alias.email == email_comment_user)
+        )
+
+    return query.order_by(SignaledComment.created_at.desc()).count()

@@ -21,6 +21,7 @@ class SignaledCommentSchemaResponse(BaseModel):
 class SignaledCommentListSchemaResponse(BaseModel):
     """the response schema for many registrations"""
     count: int
+    total: int
     data: list[SignaledCommentSchemaResponse]
 
     model_config = {

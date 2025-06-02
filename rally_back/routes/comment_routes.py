@@ -55,7 +55,7 @@ def get_comment_by_id(
 @router.post("/", response_model=CommentSchemaResponse, status_code=201)
 def comment_event(
     comment: CommentSchema,
-    current_user: User = Depends(authent_controller.get_current_user),
+    current_user: User = Depends(authent_controller.get_connected_user),
     db: Session = Depends(get_db)
 ) -> CommentSchemaResponse:
     """Post a comment on an event (authenticated user required)."""

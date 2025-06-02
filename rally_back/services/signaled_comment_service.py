@@ -103,3 +103,25 @@ def get_signaled_comments_by_filters(
         offset,
         limit
     )
+
+def get_signaled_comments_by_filters_total_count(
+    db: Session,
+    date: Optional[datetime],
+    reason_id: Optional[int],
+    user_id: Optional[int],
+    comment_id: Optional[int],
+    status: Optional[str],
+    email_user: Optional[str],
+    email_comment_user: Optional[str],
+)->int:
+    """used to get signaled comments according to given filters"""
+    return signaled_comment_repo.get_signaled_comments_filters_total_count(
+        db,
+        date,
+        reason_id,
+        user_id,
+        comment_id,
+        status,
+        email_user,
+        email_comment_user,
+    )

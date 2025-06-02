@@ -29,7 +29,8 @@ export default function SignalCommentModal({ isOpen, comment_id, onClose }: Sign
     if (!comment_id) return;
 
     try {
-      const data = await fetchReasonsApi();
+      const res = await fetchReasonsApi();
+      const data = await res?.json();
       if (Array.isArray(data.data)) {
         setReasons(data.data);
       } else {

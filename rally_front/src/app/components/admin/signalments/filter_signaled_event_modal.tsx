@@ -36,37 +36,37 @@ export default function SignalementEventFiltersModal({
 
   const fetchReasons = useCallback(async () => {
 
-      try {
-        const res = await fetchReasonsApi();
-        const data = await res?.json();
+    try {
+      const res = await fetchReasonsApi();
+      const data = await res?.json();
 
-        if (Array.isArray(data.data)) {
-          setReasons(data.data);
-        } else {
-          console.error("Les données reçues ne sont pas un tableau :", data);
-          setReasons([]);
-        }
-      } catch (err) {
-        console.error("Erreur réseau :", err);
+      if (Array.isArray(data.data)) {
+        setReasons(data.data);
+      } else {
+        console.error("Les données reçues ne sont pas un tableau :", data);
         setReasons([]);
       }
-    }, []);
+    } catch (err) {
+      console.error("Erreur réseau :", err);
+      setReasons([]);
+    }
+  }, []);
 
-    useEffect(() => {
-      if (isOpen) {
-        setFilters(initialFilters || {});
-        setSelectedReason(null);
+  useEffect(() => {
+    if (isOpen) {
+      setFilters(initialFilters || {});
+      setSelectedReason(null);
 
-        fetchReasons().then(() => {
-          if (initialFilters.reason_id) {
-            setSelectedReason(
-              (prev) =>
-                reasons.find((r) => r.id === initialFilters.reason_id) || null
-            );
-          }
-        });
-      }
-    }, [isOpen, initialFilters, fetchReasons]);
+      fetchReasons().then(() => {
+        if (initialFilters.reason_id) {
+          setSelectedReason(
+            (prev) =>
+              reasons.find((r) => r.id === initialFilters.reason_id) || null
+          );
+        }
+      });
+    }
+  }, [isOpen, initialFilters, fetchReasons]);
 
 
   if (!isOpen) return null;
@@ -129,37 +129,37 @@ export default function SignalementEventFiltersModal({
         <div className="flex flex-col gap-2">
           <label className="text-sm font-semibold text-gray-800 dark:text-white">Raison</label>
           <Select
-                        id="reason"
-                        className="w-full"
-                        placeholder="Sélectionnez une raison"
-                        selectedKeys={new Set(selectedReason ? [selectedReason.id.toString()] : [])}
-                        aria-label="Sélectionnez une raison"
-                        variant="bordered"
-                        onSelectionChange={(key) => {
-                          const selectedId = Array.from(key)[0];
-                          const found = reasons.find((r) => r.id.toString() === selectedId);
-                          setSelectedReason(found || null);
-                          setFilters((f) => ({ ...f, reason_id: found ? found.id : undefined }));
-                        }}
+            id="reason"
+            className="w-full"
+            placeholder="Sélectionnez une raison"
+            selectedKeys={new Set(selectedReason ? [selectedReason.id.toString()] : [])}
+            aria-label="Sélectionnez une raison"
+            variant="bordered"
+            onSelectionChange={(key) => {
+              const selectedId = Array.from(key)[0];
+              const found = reasons.find((r) => r.id.toString() === selectedId);
+              setSelectedReason(found || null);
+              setFilters((f) => ({ ...f, reason_id: found ? found.id : undefined }));
+            }}
 
-                        classNames={{
-                          trigger:
-                            "bg-white text-sm border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#123c69] focus:border-[#123c69] transition-all",
-                          listboxWrapper: "rounded-lg border border-gray-200 shadow-md bg-white",
-                          listbox: "p-1",
-                          popoverContent: "z-50",
-                        }}
-                      >
-                        {reasons.map((reason) => (
-                          <SelectItem
-                            aria-label={reason.reason}
-                            key={reason.id.toString()}
-                            className="hover:bg-gray-100 text-sm px-2 py-1 cursor-pointer rounded"
-                          >
-                            {reason.reason}
-                          </SelectItem>
-                        ))}
-                      </Select>
+            classNames={{
+              trigger:
+                "bg-white text-sm border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#123c69] focus:border-[#123c69] transition-all",
+              listboxWrapper: "rounded-lg border border-gray-200 shadow-md bg-white",
+              listbox: "p-1",
+              popoverContent: "z-50",
+            }}
+          >
+            {reasons.map((reason) => (
+              <SelectItem
+                aria-label={reason.reason}
+                key={reason.id.toString()}
+                className="hover:bg-gray-100 text-sm px-2 py-1 cursor-pointer rounded"
+              >
+                {reason.reason}
+              </SelectItem>
+            ))}
+          </Select>
         </div>
 
         {/* Boutons */}
